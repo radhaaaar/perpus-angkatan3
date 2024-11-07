@@ -49,80 +49,77 @@ $queryBuku = mysqli_query($koneksi, "SELECT * FROM buku");
 $queryAnggota = mysqli_query($koneksi, "SELECT * FROM anggota");
 
 
-$queryKodePnjm =  mysqli_query($koneksi, "SELECT MAX(id) AS id_pinjam FROM peminjaman");
-$rowPeminjaman = mysqli_fetch_assoc($queryKodePnjm);
-$id_pinjam = $rowPeminjaman['id_pinjam'];
-$id_pinjam++;
-$kode_pinjam = "PJM/" . date('dmy') . "/" . sprintf("%03s", $id_pinjam);
+$queryKodePnjm =  mysqli_query($koneksi, "SELECT * FROM peminjaman WHERE status='Di Pinjam'");
+
+
 
 ?>
 
 <div class="mt-5 container">
     <div class="row ">
         <div class="col-sm-12">
-            <fieldset class="border p-3">
+            <fieldset class="border p-3 shadow">
                 <legend class="float-none w-auto px-3 ">
                     <?php echo isset($_GET['detail']) ? 'Detail' : 'Tambah' ?>
-                    Peminjaman
+                    Pengembalian
                 </legend>
                 <form action="" method="post">
                     <div class="mb-3 row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-12">
                             <div class="mb-3">
                                 <label for="" class="form-label">No Peminjaman</label>
-                                <input type="text" class="form-control" name="no_peminjaman"
-                                    value="<?php echo isset($_GET['detail']) ? $rowPeminjam['no_peminjaman'] : $kode_pinjam ?>" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="form-label">Tanggal Peminjaman</label>
-                                <input type="date" class="form-control" name="tgl_peminjaman"
-                                    value="<?php echo isset($_GET['detail']) ? $rowPeminjam['tgl_peminjaman'] : '' ?>"
-                                    <?php echo isset($_GET['detail']) ? 'readonly required' : '' ?>>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 ms-5">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Nama Anggota</label>
-                                <?php if (!isset($_GET['detail'])) : ?>
-                                    <select name="id_anggota" id="" class="form-control" required>
-                                        <option value="">Pilih Anggota</option>
-                                        <!-- ini ngambil data dari tabel anggota -->
-                                        <?php while ($rowAngoota = mysqli_fetch_assoc($queryAnggota)): ?>
-                                            <option value="<?php echo $rowAngoota['id'] ?>"><?php echo $rowAngoota['nama_anggota'] ?></option>
-                                        <?php endwhile ?>
-                                    </select>
-                                <?php else: ?>
-                                    <input type="text" class="form-control" readonly value="<?php echo $rowPeminjam['nama_anggota'] ?>">
-                                <?php endif ?>
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="form-label">Tanggal Pengembalian</label>
-                                <input type="date" class="form-control" name="tgl_pengembalian"
-                                    value="<?php echo isset($_GET['detail']) ? $rowPeminjam['tgl_pengembalian'] : '' ?>"
-                                    <?php echo isset($_GET['detail']) ? 'readonly required' : '' ?>>
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="form-label">Nama Buku</label>
-                                <select name="id_buku" id="id_buku" class="form-control" required>
-                                    <option value="">Pilih Buku</option>
-                                    <!-- ambil data buku dari table buku -->
-                                    <?php while ($rowBuku = mysqli_fetch_assoc($queryBuku)): ?>
-                                        <option value="<?php echo $rowBuku['id'] ?>">
-                                            <?php echo $rowBuku['nama_buku']; ?>
-                                        </option>
+                                <select name="id_peminjaman" id="id_peminjaman" class="form-control">
+                                    <!-- ini ngambil data dari tabel peminjaman -->
+                                    <option value="">no peminjam</option>
+                                    <?php while ($rowPeminjaman = mysqli_fetch_assoc($queryKodePnjm)): ?>
+                                        <option value="<?php echo $rowPeminjaman['no_peminjaman'] ?>"><?php echo $rowPeminjaman['no_peminjaman'] ?></option>
                                     <?php endwhile ?>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    Data Peminjam
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="">No Peminjaman</label>
+                                                <input type="text" class="form-control" readonly id="no_pinjam">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="">Tanggal Peminjaman</label>
+                                                <input type="text" class="form-control" readonly id="tgl_peminjaman">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="">Denda</label>
+                                                <input type="text" class="form-control" readonly id="denda">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">Nama Anggota</label>
+                                                <input type="text" class="form-control" readonly id="nama_anggota" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="">Tanggal Pengembalian</label>
+                                                <input type="text" class="form-control" readonly id="tgl_pengembalian">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div align="right" class="mb-3">
                         <button type="button" id="add-row" class="btn btn-primary">Tambah Row
                     </div>
-                    <table id="table" class=" table table-bordered">
+                    <table id="table-pengembalian" class=" table table-bordered">
                         <thead>
                             <tr>
                                 <th>Nama Buku</th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="table-row">

@@ -7,24 +7,11 @@
                         <a class="nav-link" aria-current="page" href="index.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?pg=user">Mengatur Akun</a>
+                        <a class="nav-link" href="index.php">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?pg=kategori">kategori</a>
+                        <a class="nav-link" href="?pg=profil">Profil</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="?pg=buku">Buku</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="?pg=level">Level</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="?pg=peminjaman">Peminjaman</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="?pg=anggota">Anggota</a>
-                    </li>
-
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-bold">
                     <li class="nav-item">

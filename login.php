@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +19,9 @@
                                 <h3>selamat datang diperpus kami</h3>
                                 <p>silahkan masuk dengan akun anda</p>
                             </div>
+                            <?php if(isset($_GET['register'])): ?>
+                            <div class="alert alert-success">Registrasi pengguna berhasil</div>
+                            <?php endif ?>
                             <form action="actionLogin.php" method="post">
                                 <div class="form-group mb-3"></div>
                                 <label for="" class="form-label">
@@ -40,6 +41,10 @@
                                 </div>
                             </form>
                         </div>
+                    </div>
+                    <div class="card mt-3">
+                        <div class="card-body"></div>
+                        <p>Sudah Punya akun?<a href="register.php" class="text-secondary">Buat akun</a></p>
                     </div>
                 </div>
             </div>
